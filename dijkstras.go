@@ -15,7 +15,7 @@ func (g *solution) Dijkstras(s *node) {
 	g.prev = make([]*node, len(g.queue.nodes))
 	g.inf = ^uint(0)
 
-	for v := range g.queue.nodes {
+	for _, v := range g.queue.nodes {
 		g.dist[v.number] = g.inf
 	}
 	g.dist[s.number] = 0
@@ -23,11 +23,11 @@ func (g *solution) Dijkstras(s *node) {
 	var u *node
 	for len(g.queue.nodes) > 0 {
 		u = g.closestNode()
-		delete(g.queue.nodes, u)
 
 		if u == nil {
 			break
 		}
+		delete(g.queue.nodes, u.name)
 
 		var alt uint
 		var v *node
@@ -46,7 +46,7 @@ func (g *solution) Dijkstras(s *node) {
 func (g *solution) closestNode() *node {
 	minDist := g.inf
 	var minNode *node
-	for v := range g.queue.nodes {
+	for _, v := range g.queue.nodes {
 		if g.dist[v.number] < minDist {
 			minDist = g.dist[v.number]
 			minNode = v

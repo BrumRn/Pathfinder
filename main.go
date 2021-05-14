@@ -5,12 +5,12 @@ import "fmt"
 func main() {
 
 	g := Graph()
-	n1 := g.AddNode()
-	n2 := g.AddNode()
-	n3 := g.AddNode()
-	n33 := g.AddNode()
-	n4 := g.AddNode()
-	n5 := g.AddNode()
+	n1 := g.AddNode(1)
+	n2 := g.AddNode(2)
+	n3 := g.AddNode(3)
+	n33 := g.AddNode(4)
+	n4 := g.AddNode(5)
+	n5 := g.AddNode(6)
 
 	n1.AddEdge(n2, 1)
 	n1.AddEdge(n3, 5)
@@ -25,4 +25,21 @@ func main() {
 
 	sol.Dijkstras(n1)
 	fmt.Println(sol.dist)
+
+	maze := [][]bool{
+		{true, true, true, true},
+		{true, false, false, true},
+		{true, false, true, true},
+		{true, true, true, false},
+	}
+
+	g = MazeToGraph(maze)
+	sol = solution{queue: g}
+
+	//n := (2)*len(maze) + (3)
+
+	sol.Dijkstras(g.nodes[0])
+
+	fmt.Println(sol.dist)
+
 }

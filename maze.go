@@ -20,35 +20,43 @@ func MazeToGraph(maze [][]bool) *graph {
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
 			if maze[i][j] {
-				// N = uint(i*cols + j
-				g.AddNode()
+				g.AddNode(uint(i*cols + j))
 			}
 		}
 	}
 
-	var n uint
+	var n *node
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
+
 			if maze[i][j] {
+				n = g.nodes[uint(i*cols+j)]
 
 				if i != 0 {
-					if !maze[i-1][j] {
-						n = uint(i*cols + j)
-
-						g.addEdge
+					if maze[i-1][j] {
+						n.AddEdge(g.nodes[uint((i-1)*cols+j)], 1)
 					}
 				}
 
-				// N = uint(i*cols + j
-				g.AddNode()
+				if i != rows-1 {
+					if maze[i+1][j] {
+						n.AddEdge(g.nodes[uint((i+1)*cols+j)], 1)
+					}
+				}
+
+				if j != 0 {
+					if maze[i][j-1] {
+						n.AddEdge(g.nodes[uint(i*cols+j-1)], 1)
+					}
+				}
+
+				if j != rows-1 {
+					if maze[i][j+1] {
+						n.AddEdge(g.nodes[uint(i*cols+j+1)], 1)
+					}
+				}
 			}
 		}
-	}
-
-	for n := range g.nodes {
-		number = n.number
-		i = n.number / uint(cols)
-		j = n.number % uint(cols)
 	}
 
 	return g
