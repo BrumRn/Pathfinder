@@ -16,6 +16,8 @@ func MazeToGraph(maze [][]bool) *graph {
 	rows := len(maze[0])
 
 	g := Graph()
+	g.cols = uint(cols)
+	g.rows = uint(rows)
 
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {

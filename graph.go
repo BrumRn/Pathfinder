@@ -5,6 +5,8 @@ package main
 type graph struct {
 	nodes map[uint]*node
 	size  uint
+	rows  uint
+	cols  uint
 }
 
 // Store node with adjacency list.
