@@ -11,7 +11,7 @@ package main
 // B1001
 
 // Returns graph from maze.
-func MazeToGraph(maze [][]bool) *graph {
+func MazeToGraph(maze [][]uint) *graph {
 	cols := len(maze)
 	rows := len(maze[0])
 
@@ -21,7 +21,7 @@ func MazeToGraph(maze [][]bool) *graph {
 
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
-			if maze[i][j] {
+			if maze[i][j] == 1 {
 				g.AddNode(uint(i*cols + j))
 			}
 		}
@@ -31,29 +31,29 @@ func MazeToGraph(maze [][]bool) *graph {
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
 
-			if maze[i][j] {
+			if maze[i][j] == 1 {
 				n = g.nodes[uint(i*cols+j)]
 
 				if i != 0 {
-					if maze[i-1][j] {
+					if maze[i-1][j] == 1 {
 						n.AddEdge(g.nodes[uint((i-1)*cols+j)], 1)
 					}
 				}
 
 				if i != rows-1 {
-					if maze[i+1][j] {
+					if maze[i+1][j] == 1 {
 						n.AddEdge(g.nodes[uint((i+1)*cols+j)], 1)
 					}
 				}
 
 				if j != 0 {
-					if maze[i][j-1] {
+					if maze[i][j-1] == 1 {
 						n.AddEdge(g.nodes[uint(i*cols+j-1)], 1)
 					}
 				}
 
 				if j != rows-1 {
-					if maze[i][j+1] {
+					if maze[i][j+1] == 1 {
 						n.AddEdge(g.nodes[uint(i*cols+j+1)], 1)
 					}
 				}

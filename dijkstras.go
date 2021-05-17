@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // Store graph of nodes.
 type solution struct {
 	queue *graph
@@ -9,7 +11,7 @@ type solution struct {
 }
 
 // Finds shortest path.
-func FindShortestPath(maze [][]bool, iS uint, jS uint, iT uint, jT uint) ([]uint, []*node) {
+func FindShortestPath(maze [][]uint, iS uint, jS uint, iT uint, jT uint) ([]uint, []*node) {
 	queue := MazeToGraph(maze)
 	g := solution{queue: queue}
 
@@ -22,12 +24,32 @@ func FindShortestPath(maze [][]bool, iS uint, jS uint, iT uint, jT uint) ([]uint
 }
 
 // Print path
-func (g *solution) printPath(maze [][]bool, path []uint) {
+func (g *solution) printPath(maze [][]uint, path []uint) {
+	var i uint
+	var j uint
+	for _, n := range path {
+		i = n / uint(len(maze))
+		j = n % uint(len(maze))
+		maze[i][j] = 2
+	}
+
+	maze[path[0]/uint(len(maze))][path[0]%uint(len(maze))] = 3
+	maze[path[len(path)-1]/uint(len(maze))][path[len(path)-1]%uint(len(maze))] = 4
 
 	for i := 0; i < len(maze[0]); i++ {
 		for j := 0; j < len(maze); j++ {
-			maze[i][j]
+			if maze[i][j] == 4 {
+				fmt.Print("A" + " ")
+			} else if maze[i][j] == 3 {
+				fmt.Print("B" + " ")
+			} else if maze[i][j] == 2 {
+				fmt.Print("X" + " ")
+			} else {
+				fmt.Print(fmt.Sprint(maze[i][j]) + " ")
+			}
+
 		}
+		fmt.Println()
 	}
 
 }
@@ -36,6 +58,7 @@ func (g *solution) printPath(maze [][]bool, path []uint) {
 func (g *solution) constructSolution(start *node, target *node) []uint {
 	var path []uint
 	n := target
+	path = append(path, target.name)
 	for n != start {
 		n = g.prev[n.number]
 		path = append(path, n.name)
